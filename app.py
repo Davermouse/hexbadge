@@ -4,11 +4,32 @@ import math
 import app
 import settings
 
+from system.eventbus import eventbus
+from system.patterndisplay.events import *
+
 from tildagonos import tildagonos
 
 from app_components import TextDialog, clear_background
 from events.input import BUTTON_TYPES, Buttons
 from perf_timer import PerfTimer
+
+def hsv_to_rgb(h, s, v):
+    i = math.floor(h*6)
+    f = h*6 - i
+    p = v * (1-s)
+    q = v * (1-f*s)
+    t = v * (1-(1-f)*s)
+
+    r, g, b = [
+        (v, t, p),
+        (q, v, p),
+        (p, v, t),
+        (p, q, v),
+        (t, p, v),
+        (v, p, q),
+    ][int(i%6)]
+
+    return int(r * 255), int(g * 255), int(b * 255)
 
 class DMHexBadgeApp(app.App):
     name = None
@@ -36,6 +57,8 @@ class DMHexBadgeApp(app.App):
 
         self.d_rots = list(map(lambda i: (i + 1) * 0.01, range(0, self.hex_size)))
         self.dims = list(map(lambda i: self.hex_size - i * 5, range(0, self.hex_size)))
+
+        eventbus.emit(PatternDisable())
 
     async def run(self, render_update):
         last_time = time.ticks_ms()
@@ -72,7 +95,8 @@ class DMHexBadgeApp(app.App):
         self.rots = list(map(lambda r, d_r: r + (self.d_d_rot * d_r), self.rots, self.d_rots))
         
         # TODO: Make LEDS rotate with the hexes
-       # tildagonos.leds[0] = (1, 0, 0)
+        for i in range(0, 13):
+            tildagonos.leds[i] = hsv_to_rgb((i / 12) * self.rots[0], 1, 0.5)
 
         if self.button_states.get(BUTTON_TYPES["CANCEL"]):
             # quit the app
