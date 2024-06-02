@@ -1,6 +1,6 @@
 [app]
 # The name of your app as displayed in the menu
-name = "Demo App"
+name = "DM HexBadge"
 
 # The submenu where your app should appear.
 # One of: "Badge", "Music", "Media", "Apps", "Games"
@@ -18,20 +18,20 @@ category = "Badge"
 
 [entry]
 # The name of your entry point `Application` class
-# class = "NickApp"
+class = "DMHexBadgeApp"
 
 [metadata]
 # Your nickname.  Must be at most 32 characters!
-author = "hughrawlinson"
+author = "davermouse"
 
 # License of your app as an SPDX identifier: <https://spdx.org/licenses/>
-license = "LGPL-3.0-only"
+license = "0BSD"
 
 # URL to the repository of your app.
-url = "https://www.github.com/hughrawlinson/tildagon-demo"
+url = "https://github.com/Davermouse/hexbadge"
 
 # Description of your app.  Maximum 140 characters!
-description = "A demo tildagon app for use developing the app directory"
+description = "A simple badge app with some spinning hexagons"
 
 # Version number of your app.  If you push a commit where this number is
 # increased, we interpret this as a new version being released.
