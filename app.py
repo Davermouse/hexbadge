@@ -102,6 +102,7 @@ class DMHexBadgeApp(app.App):
             # quit the app
             self.minimise()
             self.button_states.clear()
+            eventbus.emit(PatternReload())
 
     def draw_hex(self, ctx, dim, rot, color):
         sides = 6
